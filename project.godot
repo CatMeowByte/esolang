@@ -1,0 +1,38 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Esolang"
+run/main_scene="uid://bo7cog2d3u2et"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0.215686, 0.278431, 0.309804, 1)
+boot_splash/fullsize=false
+boot_splash/image="uid://ghaytjlpcf3r"
+config/icon="uid://ghaytjlpcf3r"
+boot_splash/minimum_display_time=500
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=320
+window/size/mode=3
+window/energy_saving/keep_screen_on=false
+
+[editor]
+
+naming/default_signal_callback_name="_{node_name}_{signal_name}"
+naming/default_signal_callback_to_self_name="_{signal_name}"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

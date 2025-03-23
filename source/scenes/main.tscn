@@ -1,0 +1,269 @@
+[gd_scene load_steps=9 format=3 uid="uid://bo7cog2d3u2et"]
+
+[ext_resource type="Script" uid="uid://ccutrvq3vb1m5" path="res://source/scripts/esolang.gd" id="1_5f32h"]
+[ext_resource type="FontFile" uid="uid://bw8rn1lf1psir" path="res://source/styles/mono.fontdata" id="2_5c5rr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t5wd7"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.109804, 0.109804, 0.109804, 1)
+corner_detail = 1
+
+[sub_resource type="Theme" id="Theme_ywmtt"]
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_t5wd7")
+
+[sub_resource type="Theme" id="Theme_t5wd7"]
+LineEdit/font_sizes/font_size = 10
+LineEdit/fonts/font = ExtResource("2_5c5rr")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ywmtt"]
+content_margin_left = 8.0
+bg_color = Color(0.117647, 0.117647, 0.117647, 1)
+corner_detail = 1
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_5c5rr"]
+number_color = Color(0.902344, 0.762821, 0.56749, 1)
+symbol_color = Color(0.511093, 0.71976, 0.902344, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dnxx"]
+bg_color = Color(0.180392, 0.180392, 0.180392, 0.470588)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5f32h")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="About" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+tooltip_text = "Brainfuck-compatible Esoteric Language
+by CatMeowByte
+
+Jumper
+< : Move pointer backward
+> : Move pointer forward
+# : Jump pointer to the specified memory cell
+
+Setter
+- : Subtract from the current cell
++ : Add to the current cell
+= : Set the current cell to the specified number
+
+Teleporter
+[ : If the current cell is zero, jump forward to the matching ]
+] : If the current cell is non-zero, jump backward to the matching [
+
+Input / Output
+? : Await a single character of input and store its Unicode value in the current cell
+! : Output the character at the current cell
+
+Notes:
+- All commands operate by default with a value of 1 or followed by a number.
+  Example: \"+\" is the same as \"+ 1\", \"> 3\" moves the pointer forward by 3.
+- Whitespace is ignored.
+- Comments may be written only using lowercase letters a–z.
+"
+theme = SubResource("Theme_ywmtt")
+theme_override_fonts/font = ExtResource("2_5c5rr")
+disabled = true
+text = "?"
+
+[node name="Reset" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_5c5rr")
+text = "Reset"
+
+[node name="Input" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_5c5rr")
+text = "65 KEY [A]"
+vertical_alignment = 1
+
+[node name="0000" type="Control" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Ticker" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+theme = SubResource("Theme_t5wd7")
+min_value = 1.0
+max_value = 1000.0
+value = 100.0
+rounded = true
+allow_greater = true
+alignment = 1
+suffix = "tick"
+custom_arrow_step = 10.0
+select_all_on_focus = true
+
+[node name="Step" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_5c5rr")
+text = "Step"
+
+[node name="Jump" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_5c5rr")
+text = "Jump"
+
+[node name="Run" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_5c5rr")
+text = "Run"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Code" type="CodeEdit" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_constants/caret_width = 2
+theme_override_fonts/font = ExtResource("2_5c5rr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ywmtt")
+text = "# 1 = 72
+# 2 = 105
+# 3 = 44
+# 4 = 32
+# 5 = 97
+# 6 = 108
+# 7 = 108
+# 8 = 33
+# 0
+!>!>!>!>!>!>!>!
+"
+scroll_smooth = true
+scroll_past_end_of_file = true
+caret_blink = true
+caret_blink_interval = 1.0
+syntax_highlighter = SubResource("CodeHighlighter_5c5rr")
+highlight_current_line = true
+gutters_draw_line_numbers = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Header" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_5c5rr")
+theme_override_font_sizes/font_size = 12
+text = "#  IDX VAL CHR "
+
+[node name="Map" type="RichTextLabel" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("2_5c5rr")
+theme_override_font_sizes/normal_font_size = 12
+text = "X0000 XXX X
+X0000 XXX X
+X0000 XXX X
+X0000 XXX X"
+shortcut_keys_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Size" type="SpinBox" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_t5wd7")
+min_value = 8.0
+max_value = 4096.0
+step = 8.0
+value = 64.0
+rounded = true
+allow_greater = true
+alignment = 1
+suffix = "bytes"
+custom_arrow_step = 8.0
+select_all_on_focus = true
+
+[node name="Control" type="Control" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="Output" type="TextEdit" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2/Control/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_colors/font_readonly_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_5c5rr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ywmtt")
+text = "Hi, all!"
+editable = false
+emoji_menu_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+empty_selection_clipboard_enabled = false
+
+[node name="State" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer2/Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_5c5rr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8dnxx")
+text = "AWAITING INPUT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/Reset" to="." method="reset"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/Ticker" to="." method="_ticker_value_changed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/Step" to="." method="step"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/Jump" to="." method="jump"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/Run" to="." method="run"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/Size" to="." method="_size_value_changed"]
