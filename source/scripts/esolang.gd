@@ -39,13 +39,19 @@ func undo_state() -> void:
 func is_state(key: State) -> bool: return state[0] == key
 
 
-func get_number():
+func get_number() -> int:
 	var number: int = 0
+	var found_digit: bool = false
 	while true:
 		stepper += 1
-		if not code[stepper].is_valid_int(): return number if number else 1
-		if number: number *= 10
+		if stepper >= code.length() or not code[stepper].is_valid_int():
+			if found_digit: return number
+			else: break
+		if found_digit: number *= 10
 		number += int(code[stepper])
+		found_digit = true
+	return 1
+
 
 
 func update_ui()-> void:
